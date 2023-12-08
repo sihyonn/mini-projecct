@@ -8,6 +8,7 @@ declare global {
 
 function App() {
   const mapRef = useRef<HTMLDivElement>(null);
+  const [markerList, setMarkerList] = useState<any[]>([]);
   const map = useRef<any>(null);
 
   useEffect(() => {
@@ -25,6 +26,22 @@ function App() {
           };
 
           map.current = new window.kakao.maps.Map(mapRef.current, options);
+
+          window.kakao.maps.event.addListener(
+            map.current,
+            'rightclick',
+            (mouseEvent: any) => {
+              const latlng = mouseEvent.latLng;
+              const title = prompt('마커의 타이틀을 입력해주세요:');
+
+              var marker = new window.kakao.maps.Marker({
+                map: map.current,
+                position: latlng,
+                title,
+              });
+              setMarkerList((prev) => [...prev, marker]);
+            }
+          );
         }
       });
     };
@@ -67,6 +84,16 @@ function App() {
         }}
       />
       <div ref={mapRef} style={{ width: 300, height: 300 }}></div>
+      {markerList.map((value) => (
+        <div
+          onClick={() => {
+            value.setMap(null);
+            setMarkerList(markerList.filter((v) => v !== value));
+          }}
+        >
+          {value.getTitle()}
+        </div>
+      ))}
     </div>
   );
 }
