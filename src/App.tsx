@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 
 declare global {
   interface Window {
@@ -8,6 +8,7 @@ declare global {
 
 function App() {
   const mapRef = useRef<HTMLDivElement>(null);
+  const [map, setMap] = useState<any>();
 
   useEffect(() => {
     const script = document.createElement('script');
@@ -20,10 +21,10 @@ function App() {
         if (mapRef.current) {
           var options = {
             center: new window.kakao.maps.LatLng(33.450701, 126.570667),
-            level: 3,
+            level: 5,
           };
 
-          var map = new window.kakao.maps.Map(mapRef.current, options);
+          setMap(new window.kakao.maps.Map(mapRef.current, options));
         }
       });
     };
@@ -32,6 +33,20 @@ function App() {
 
   return (
     <div>
+      <button
+        onClick={() => {
+          map.setCenter(new window.kakao.maps.LatLng(33.450701, 126.570667));
+        }}
+      >
+        서울
+      </button>
+      <button
+        onClick={() => {
+          map.setCenter(new window.kakao.maps.LatLng(35.1595454, 126.8526012));
+        }}
+      >
+        광주
+      </button>
       <div ref={mapRef} style={{ width: 300, height: 300 }}></div>
     </div>
   );
