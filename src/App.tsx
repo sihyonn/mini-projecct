@@ -8,7 +8,7 @@ declare global {
 
 function App() {
   const mapRef = useRef<HTMLDivElement>(null);
-  const [map, setMap] = useState<any>();
+  const map = useRef<any>(null);
 
   useEffect(() => {
     const script = document.createElement('script');
@@ -24,7 +24,7 @@ function App() {
             level: 5,
           };
 
-          setMap(new window.kakao.maps.Map(mapRef.current, options));
+          map.current = new window.kakao.maps.Map(mapRef.current, options);
         }
       });
     };
@@ -35,14 +35,18 @@ function App() {
     <div>
       <button
         onClick={() => {
-          map.setCenter(new window.kakao.maps.LatLng(33.450701, 126.570667));
+          map.current.setCenter(
+            new window.kakao.maps.LatLng(33.450701, 126.570667)
+          );
         }}
       >
-        서울
+        카카오
       </button>
       <button
         onClick={() => {
-          map.setCenter(new window.kakao.maps.LatLng(35.1595454, 126.8526012));
+          map.current.setCenter(
+            new window.kakao.maps.LatLng(35.1595454, 126.8526012)
+          );
         }}
       >
         광주
