@@ -51,6 +51,14 @@ function App() {
       >
         광주
       </button>
+      <input
+        type="range"
+        min="1"
+        max="20"
+        onChange={(v) => {
+          map.current.setLevel(v.currentTarget.value, { animate: true });
+        }}
+      />
       <div ref={mapRef} style={{ width: 300, height: 300 }}></div>
     </div>
   );
