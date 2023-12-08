@@ -51,6 +51,13 @@ function App() {
       >
         광주
       </button>
+      <button
+        onClick={() => {
+          map.current.setMapTypeId(window.kakao.maps.MapTypeId.HYBRID);
+        }}
+      >
+        지도 타입변경
+      </button>
       <input
         type="range"
         min="1"
